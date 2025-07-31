@@ -1,48 +1,57 @@
 """
-CP1404/CP5632 Practical - Suggested Solution
-Recursion
+CP1404/CP5632 Practical
+Testing code using assert and doctest
 """
 
-
-def do_it(n):
-    """Do... it."""
-    if n <= 0:
-        return 0
-    return n % 2 + do_it(n - 1)
+import doctest
+from prac_06.car import Car
 
 
-# print(do_it(5))
+def repeat_string(s, n):
+    """Repeat string s, n times, with spaces in between."""
+    return s * n
 
 
-def do_something(n):
-    """Print the squares of positive numbers from n down to 0."""
-    # if we get to zero, we're done... just return
-    if n < 0:
-        return
-    # if we have not hit the base case (no else needed)
-    # print the square of n, then do the same for n-1
-    print(n ** 2)
-    do_something(n - 1)
+def is_long_word(word, length=5):
+    """
+    Determine if the word is as long or longer than the length passed in
+    >>> is_long_word("not")
+    False
+    >>> is_long_word("supercalifrag")
+    True
+    >>> is_long_word("Python", 6)
+    True
+    """
+    return len(word) > length
 
 
-do_something(4)
+def run_tests():
+    """Run the tests on the functions."""
+    # assert test with no message - used to see if the function works properly
+    assert repeat_string("Python", 1) == "Python"
+    # the test below should fail
+    assert repeat_string("hi", 2) == "hi hi"
+
+    # TODO: 1. fix the repeat_string function above so that it passes the failing test
+    # Hint: "-".join(["yo", "yo"] -> "yo-yo"
+
+    # assert test with custom message,
+    # used to see if Car's init method sets the odometer correctly
+    # this should pass (no output)
+    car = Car()
+    assert car._odometer == 0, "Car does not set odometer correctly"
+
+    # TODO: 2. write assert statements to show if Car sets the fuel correctly
+    # Note that Car's __init__ function sets the fuel in one of two ways:
+    # using the value passed in or the default
+    # You should test both of these
+    car = Car(fuel=10)
 
 
-def calculate_blocks(rows):
-    """Calculate blocks needed for a given number of rows of a 2D pyramid."""
-    # base case: we need zero blocks for zero (or fewer!) rows
-    if rows <= 0:
-        return 0
-    # recursive case: each row contains the number of blocks as its row number
-    # ... plus the rest of it
-    return rows + calculate_blocks(rows - 1)
+run_tests()
 
+# TODO: 3. Uncomment the following line and run the doctests
+# (PyCharm may see your >>> doctest comments and run doctests anyway.)
+# doctest.testmod()
 
-def build_pyramid():
-    """Get user's pyramid size in rows and output the blocks needed."""
-    # chosen_rows = 6
-    chosen_rows = int(input("How many rows is your pyramid: "))
-    print(f"For {chosen_rows} rows, you need {calculate_blocks(chosen_rows)} blocks")
-
-
-build_pyramid()
+# TODO: 4. Fix the failing is_long_word function
